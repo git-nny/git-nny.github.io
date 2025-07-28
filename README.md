@@ -1,2 +1,2 @@
 # git-nny.github.io
-Portolfio Website for the Werkschau
+Portofolio Website for the Werkschau, for sure. Nothing is here.
