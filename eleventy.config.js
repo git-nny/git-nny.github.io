@@ -1,8 +1,10 @@
 export default async function(eleventyConfig) {
   return {
+    markdownTemplateEngine: "njk",
+    htmlTemplateEngine: "njk",
     dir: {
-      input: "src",
-      output: "_site"
+      input: "site",
+      output: "dist"
     }
   }
 };
