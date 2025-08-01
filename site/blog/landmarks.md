@@ -1,9 +1,7 @@
 ---
 title: Journal Entries
-layout: basic.njk
-
-
+layout: blogpost.njk
 ---
 
 Hello! I just want this to work now! Why doesnt this work!! Fun!"
-ggggggggggggggggggggggggg5h5ehevhthtfhhukukvhb bb
+ggggggggggggggggggggggggg5h5ehevhthtfhhukukvhb bb Hello world potato saladghhh

@@ -1,0 +1,8 @@
+---
+title: Default Title
+permalink: blog\{{ title | slugify }}.html
+
+---
+  {% include "_head.njk" %}
+    {{ content | safe }}
+  {% include "_footer.njk" %}

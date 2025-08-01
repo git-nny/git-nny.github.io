@@ -8,7 +8,9 @@ export default async function(eleventyConfig) {
     htmlTemplateEngine: "njk",
     dir: {
       input: "site",
-      output: "dist"
+      output: "dist",
+      includes: "_includes",
+      layouts: "_layout"
     },
 
     
