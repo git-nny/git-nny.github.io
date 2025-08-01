@@ -1,7 +1,7 @@
 export default async function(eleventyConfig) {
   //passthrough copies
     eleventyConfig.addPassthroughCopy("style")
-    eleventyConfig.addPassthroughCopy("scrips")
+    eleventyConfig.addPassthroughCopy("scripts")
     //add passthrough copy for all within projects
   return {
     markdownTemplateEngine: "njk",

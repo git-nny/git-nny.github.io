@@ -1,0 +1,22 @@
+  ---
+  title: lets gooo
+  permalink: /blog.html
+  ---
+  
+  {% include "_head.njk" %}
+
+
+  <p> aaaaaaaaa dddddddddddddd</p>
+  <p> aaaaaaaaa dddddddddddddd</p>
+  <p> aaaaaaaaa dddddddddddddd</p>
+
+  
+
+<ul>
+{%- for post in collections.post -%}
+  <li>{{ post.data.title }}</li>
+{%- endfor -%}
+</ul>
+
+
+  {% include "_footer.njk" %}
