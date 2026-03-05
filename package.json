@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "rimraf dist && npx @11ty/eleventy --serve",
-    "build": "rimraf dist && npx @11ty/eleventy"
+    "build": "rimraf dist && npx @11ty/eleventy",
+    "start-ghpages": "npx @11ty/eleventy --pathprefix=/eleventy-base-blog/ --serve --quiet"
   },
   "repository": {
     "type": "git",
