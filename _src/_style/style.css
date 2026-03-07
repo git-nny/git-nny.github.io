@@ -118,6 +118,9 @@ hr {
 .alt_text {
   color: var(--text_alt);
 }
+.upper {
+  text-transform: uppercase;
+}
 em {
   text-decoration: underline;
   text-decoration-color: var(--detail_3);
@@ -127,7 +130,6 @@ em {
 nav{
   position: sticky;
   top: 0;
-  /* background-image: linear-gradient(to bottom, var(--bg) 90%, #00000000 99.9%); */
   display: flex;
   justify-content: flex-end;
 
@@ -184,6 +186,7 @@ li{
   display: flex;
   flex-direction: row;
   gap: var(--gap_big);
+  align-self: baseline;
 }
 .flex-column{
   display: flex;
@@ -222,7 +225,7 @@ li{
 .icon {
   max-width: 50px;
 }
-.test {
+.test { /*TODO: What*/
   display: flex;
   flex-direction: row;
   gap: var(--gap_mini);
@@ -231,6 +234,14 @@ li{
 
 .fill {
   height: 75vh;
+}
+.padding-right {
+  padding-right: 10px;
+}
+.card{
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap_small);
 }
 
 @media screen and (orientation: portrait)  { 
