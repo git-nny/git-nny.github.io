@@ -36,7 +36,10 @@
   --p_size: 1rem;
   --small_size: 0.8rem;
 
+  /*MISC*/
   --col_w_1: 15vw; /*TODO! set correctly*/
+
+  --border_radius_img: 5%;
 }
 
 html{
@@ -210,7 +213,7 @@ li{
   display: block;
   width: 80%;
   height: 80%;
-  border-radius: 5%;
+  border-radius: var(--border_radius_img);
 }
 
 .border {
@@ -238,7 +241,8 @@ li{
 .padding-right {
   padding-right: 10px;
 }
-.card{
+
+.card{ /*TODO: Better Name!*/
   display: flex;
   flex-direction: column;
   gap: var(--gap_small);
@@ -259,6 +263,7 @@ li{
   align-self: flex-end;
 }
 
+/* Rich Text Styling -> TODO: Switch to SCSS? */
 #rich_text{
   width: 90%;
 }
@@ -267,13 +272,33 @@ li{
   margin-left: auto;
   margin-right: auto;
 }
-#rich_text>p>img{
-  width: 50vw;
+
+/* Wrestling with pictures to be displayed properly */
+.default-img>picture>img{
+  display: block;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
-
+  border-radius: var(--border_radius_img) ;
 }
-#rich_text>p>img p{
+
+figure>picture>img{
+  width: 15vw;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.gallery {
+  display: flex;
+  flex-direction: row;
+  gap: var(--gap_mini);
+}
+.gallery>*, .gallery>picture>img {
+  width: calc( (100% - var(--gap_mini)) / 2);
+}
+
+figcaption{
   color: var(--text_alt);
 }
 
