@@ -11,6 +11,7 @@ export default async function(eleventyConfig) {
       input: "_src",
       output: "_site",
       includes: "_includes",
+      layouts: "_layout"
     }
   }
 };

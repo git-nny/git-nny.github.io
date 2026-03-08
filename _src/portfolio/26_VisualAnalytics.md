@@ -6,4 +6,5 @@ TLDR: My Beloved!
 time: SOSE 23
 field: ["Data Visualisation", "D3.js", "Frontend" ]
 status: Coming Soon
+layout: case_study.njk
 ---
