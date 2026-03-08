@@ -3,10 +3,10 @@ permalink: portfolio\{{ title | slugify }}.html
 ---
 
 {% include "_header.njk" %}
-<section id="landing_project" class="fill" >
-  <div class="flex-column">
-    <h1> {{ title | safe }}</h1>
-    <h3 class="alt_text"> {{ subline | safe }} </h3>
+<section id="landing_project" class="fill flex-column align_spread" >
+  <div class="flex-column  ">
+    <h1 class="h2"> {{ title | safe }}</h1>
+    <h3 class="alt_text"> {{ TLDR| safe }} </h3>
   </div>
 
   <div id="detail-box" class="flex-column reduced-gap">
@@ -17,7 +17,7 @@ permalink: portfolio\{{ title | slugify }}.html
     </div>
 
     <div>
-      <p class="upper alt_text small_font " > Class </p>
+      <p class="upper alt_text small_font " > For </p>
       <p> {{ for }} </p>
     </div>
 

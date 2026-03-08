@@ -3,26 +3,52 @@
   <h1> Case Studies </h1>
   <p> Currently under construction! </p>
   <div class="flex-column">
-    {%- for post in collections.casestudy | reverse -%}
+    {%- for post in collections.casestudy -%}
+      {%- if post.data.status == "Coming Soon" -%}
   
-    <a href="{{ post.data.title | slugify }}" class="card">
-      <p class="alt_text upper"> <em> {{ post.data.status }} </em> </p>
-      <h2> {{ post.data.title }} </h2>
-      <p> {{ post.data.TLDR }}  </p>
-        <div class="flex-row  padding-right align_spread">
-          <p class="alt_text small_font upper"> {{ post.data.time}}  </p>
-          <div class="flex-row mini-gap">
-            <p class="alt_text small_font upper"> {{ post.data.field[0]}}  </p>
-            <img src="_assets/img/asterisk.svg" alt="asterisk icon">
-            <p class="alt_text small_font upper"> {{ post.data.field[1]}}  </p>
-            <img src="_assets/img/asterisk.svg" alt="asterisk icon">
-            <p class="alt_text small_font upper"> {{ post.data.field[2]}}  </p>
+      <a class="card">
+        <p class="alt_text upper"> <em> {{ post.data.status }} </em> </p>
+        <h2> {{ post.data.title }} </h2>
+        <p> {{ post.data.TLDR }}  </p>
+          <div class="flex-row  padding-right align_spread">
+            <p class="alt_text small_font upper"> {{ post.data.time}}  </p>
+            <div class="flex-row mini-gap">
+              <p class="alt_text small_font upper"> {{ post.data.field[0]}}  </p>
+              <img src="_assets/img/asterisk.svg" alt="asterisk icon">
+              <p class="alt_text small_font upper"> {{ post.data.field[1]}}  </p>
+              <img src="_assets/img/asterisk.svg" alt="asterisk icon">
+              <p class="alt_text small_font upper"> {{ post.data.field[2]}}  </p>
+            </div>
+            
           </div>
           
-        </div>
-        
-      <hr>      
-    </a> 
+        <hr>      
+      </a> 
+      {%- endif -%}
+  {%- endfor -%}
+
+  {%- for post in collections.casestudy -%}
+      {%- if post.data.status !== "Coming Soon" -%}
+  
+      <a href="{{ post.data.title | slugify }}" class="card">
+        <p class="alt_text upper"> <em> {{ post.data.status }} </em> </p>
+        <h2> {{ post.data.title }} </h2>
+        <p> {{ post.data.TLDR }}  </p>
+          <div class="flex-row  padding-right align_spread">
+            <p class="alt_text small_font upper"> {{ post.data.time}}  </p>
+            <div class="flex-row mini-gap">
+              <p class="alt_text small_font upper"> {{ post.data.field[0]}}  </p>
+              <img src="_assets/img/asterisk.svg" alt="asterisk icon">
+              <p class="alt_text small_font upper"> {{ post.data.field[1]}}  </p>
+              <img src="_assets/img/asterisk.svg" alt="asterisk icon">
+              <p class="alt_text small_font upper"> {{ post.data.field[2]}}  </p>
+            </div>
+            
+          </div>
+          
+        <hr>      
+      </a> 
+    {%- endif -%}
   {%- endfor -%}
   </div>
   

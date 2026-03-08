@@ -39,7 +39,7 @@
   /*MISC*/
   --col_w_1: 15vw; /*TODO! set correctly*/
 
-  --border_radius_img: 5%;
+  --border_radius_img: 30px;
 }
 
 html{
@@ -78,10 +78,11 @@ h4 {
 }
 p, a {
   font-size: var(--p_size);
-  line-height: 150%;
+  line-height: 160%;
   vertical-align: top;
   color: var(--text);
 }
+
 a {
   text-decoration: none;
   transition: color 0.4s;
@@ -174,7 +175,7 @@ section {
 li{
   padding-top: calc(var(--gap_small) / 2);
   list-style-image: url("../_assets/img/asterisk.svg");
-  line-height: 120%;
+  line-height: 140%;
 
 }
 
@@ -248,14 +249,8 @@ li{
   gap: var(--gap_small);
 }
 
-#landing_project{
+#landing_project, #landing_project>h1{
   width: 80%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-#landing_project>*{
-  max-width: 80%;
 }
 
 #detail-box{
@@ -268,9 +263,21 @@ li{
   width: 90%;
 }
 #rich_text>*{
-  width: 45vw;
+  width: 40vw;
   margin-left: auto;
   margin-right: auto;
+}
+aside>a, aside{
+color: var(--text_alt);
+  
+}
+aside>a::before{
+  content: "* ";
+  color: var(--text_alt);
+}
+
+aside>a::after{
+  background-color: var(--text_alt);
 }
 
 /* Wrestling with pictures to be displayed properly */
@@ -283,10 +290,8 @@ li{
 }
 
 figure>picture>img{
-  width: 15vw;
+  width: 100%;
   height: auto;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .gallery {
@@ -300,6 +305,7 @@ figure>picture>img{
 
 figcaption{
   color: var(--text_alt);
+  text-align: center;
 }
 
 @media screen and (orientation: portrait)  { 
@@ -310,38 +316,43 @@ figcaption{
   --h3_size: 2rem;
   --p_size: 1rem;
   --small_size: 0.8rem;
-}
-html {
-  font-size: 14px;
-}
-section {
-  width: 90%;
-}
+  }
+  html {
+    font-size: 14px;
+  }
+  section, #landing_project, #landing_project>h1{
+  width: 80%;
+  }
 
-li {
-  line-height: 150%;
-}
-nav {
-  background-image: linear-gradient(to bottom, var(--bg) 80%, #00000000 99.9%);
-}
-#portrait {
-  width: 50vw;
-  margin-left: auto;
-  margin-right: auto;
-}
+  #rich_text>*{
+    width: 90%;
+  }
 
-footer{
-  padding: var(--gap_small);
-  margin-top: var(--gap_mini);
-  flex-wrap: wrap-reverse;
-}
-footer>p {
-  width: 100%;
-}
-.mobile_column{
-  flex-direction: column;
-}
+  li {
+    line-height: 150%;
+  }
+  nav {
+    background-image: linear-gradient(to bottom, var(--bg) 80%, #00000000 99.9%);
+  }
+  #portrait {
+    width: 50vw;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-
+  footer{
+    padding: var(--gap_small);
+    margin-top: var(--gap_mini);
+    flex-wrap: wrap-reverse;
+  }
+  footer>p {
+    width: 100%;
+  }
+  .mobile_column{
+    flex-direction: column;
+  }
+  .h2 {
+    font-size: var(--h2_size);
+  }
 
 }
