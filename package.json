@@ -4,8 +4,8 @@
   "description": "Portolfio Website for the Werkschau, but most importantly a testing ground for things!",
   "main": "index.js",
   "scripts": {
-    "dev": "rimraf dist && npx @11ty/eleventy --serve",
-    "build": "rimraf dist && npx @11ty/eleventy"
+    "dev": "rimraf _site && npx @11ty/eleventy --serve",
+    "build": "rimraf _site && npx @11ty/eleventy"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,9 @@
   "dependencies": {
     "@11ty/eleventy": "^3.1.2",
     "@11ty/eleventy-img": "^6.0.4",
+    "@11ty/eleventy-plugin-vite": "^7.0.0",
+    "arquero": "^8.0.3",
+    "d3": "^7.9.0",
     "markdown-it-attrs": "^4.3.1",
     "rimraf": "^6.1.3"
   }

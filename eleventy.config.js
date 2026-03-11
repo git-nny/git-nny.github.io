@@ -1,11 +1,13 @@
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 import markdownIt from "markdown-it";
 import markdownItAttrs from "markdown-it-attrs";
+import EleventyVitePlugin from "@11ty/eleventy-plugin-vite";
 
 export default async function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("_src/_style")
   eleventyConfig.addPassthroughCopy("_src/_scripts")
   eleventyConfig.addPassthroughCopy("_src/_assets/")
+  eleventyConfig.addPassthroughCopy("_src/projects")
   eleventyConfig.addPassthroughCopy("CNAME")
 
   // For image plugin
@@ -15,6 +17,8 @@ export default async function(eleventyConfig) {
           loading: 'lazy'
         }
   });
+
+  eleventyConfig.addPlugin(EleventyVitePlugin);
 
   // for md it attr - geminied!
   const mdOptions = {

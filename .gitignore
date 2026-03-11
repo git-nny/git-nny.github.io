@@ -1,5 +1,6 @@
-/_site
+/_site/*
 /_src/_fonts
 /node_modules
 node_modules
 README.md
+/_site

@@ -38,3 +38,5 @@ I cannot understate how little I knew and how determined I was to make it work -
 The original code was never uploaded anywhere and subjected to the information is beautiful awards for the category Arts, Entertainment and Culture with screenshots and videos (and it made the shortlist!).
 
 *A 2026 rework is currently queued, improving on the original code, responsiveness, and bringing in new insights from my data science studies.*
+
+<a href="../projects/26_eurovision/26_Eurovision.html"> View Project

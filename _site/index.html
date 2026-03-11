@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Oh, you're early! </title>
+    <title> Under Construction! </title>
     <link rel="stylesheet" href="..\_style\style.css">
     <link rel="icon" type="image/png" href="img\favicon.png">
   </head>
@@ -14,44 +14,29 @@
   <div>
     <a href="/index.html#about"> Über </a>
     <a href="/index.html#cv"> Lebenslauf </a>
+    <a href="/portfolio/"> Case Studies </a>
   </div>
 </nav>
 
 <section id="about">
   <h1> Über </h1>
   <div class="flex-row mobile_column">
-    <img id="portrait" src="_assets/img/Werkschau_Portrait.png" alt="black and white image of a young person with glasses smiling into the camera. A line drawing of a small plant placed on the head.">
+    <picture><source type="image/webp" srcset="/.11ty/image/?src=_src%5C_assets%5Cimg%5CWerkschau_Portrait.png&width=2002&format=webp&via=transform 2002w"><img loading="lazy" id="portrait" src="/.11ty/image/?src=_src%5C_assets%5Cimg%5CWerkschau_Portrait.png&width=2002&format=png&via=transform" alt="black and white image of a young person with glasses smiling into the camera. A line drawing of a small plant placed on the head." width="2002" height="3002"></picture>
     <div class="flex-column reduced-gap">
       <h2> Jennifer Schuler </h2>
 
       <div class="mini-gap border flex-row align_spread">
         <div class="test">
-          <img src="_assets/img/map-pin.svg" alt="map pin icon">
+          <picture><source type="image/webp" srcset="/.11ty/image/?src=_src%5C_assets%5Cimg%5Cmap-pin.svg&width=18&format=webp&via=transform 18w"><img loading="lazy" src="/.11ty/image/?src=_src%5C_assets%5Cimg%5Cmap-pin.svg&width=18&format=png&via=transform" alt="map pin icon" width="18" height="18"></picture>
           <p> Düsseldorf, DE </p>
         </div>
 
         <div class="test">
-          <img src="_assets/img/asterisk.svg" alt="asterisk" class="icon">
+          <picture><source type="image/webp" srcset="/.11ty/image/?src=_src%5C_assets%5Cimg%5Casterisk.svg&width=18&format=webp&via=transform 18w"><img loading="lazy" src="/.11ty/image/?src=_src%5C_assets%5Cimg%5Casterisk.svg&width=18&format=png&via=transform" alt="asterisk" class="icon" width="18" height="18"></picture>
           <p> Sie/Ihr </p>
         </div>
 
       </div>
-        <!-- <div class="flex-row mini-gap">
-          <img src="_assets/img/asterisk.svg" alt="asterisk" class="icon">
-          <p> Sie/Ihr </p> -->
-        
-
-        <!-- <div class="border align_spread flex-row">
-        <div class="flex-row mini-gap">
-          <img src="_assets/img/map-pin.svg" alt="map pin icon">
-          <p> Düsseldorf DE </p>
-        </div>
-        <div class="flex-row mini-gap">
-          
-        </div> -->
-
-        
-      
 
       <p> Hey there, nice to meet you! I'm a <em> multidisciplinary creative developer with a strong interest in Front-End-Development, User Experience and Data Science. </em> </p>
     </div>
@@ -113,7 +98,7 @@
   <h4 class="alt_text width_1"> Skills </h4>
   <div class="flex-column">
     <div>
-      <h4 class="alt_text" > HTML & CSS </h4>
+      <h4 class="alt_text"> HTML & CSS </h4>
       <ul>
         <li> Semantic HTML </li>
         <li> Static Site Generation using 11ty </li>
@@ -121,7 +106,7 @@
       </ul>
     </div>
     <div>
-      <h4 class="alt_text" > JavaScript </h4>
+      <h4 class="alt_text"> JavaScript </h4>
       <ul>
         <li> D3.js </li>
         <li> Pixi.js </li>
@@ -145,28 +130,27 @@
   </div> 
   </div>
   <hr>
-<div class="flex-row mobile_column" >
+<div class="flex-row mobile_column">
   <h4 class="alt_text width_1"> Sprachen </h4>
-  <ul>
-    <li> Deutsch <span class="alt_text"> Muttersprache </span> </li>
-    <li> Englisch <span class="alt_text"> fortgeschrittene Sprachkenntnisse (B2/C1) </span> </li>
-    <li> Französisch<span class="alt_text"> Grundkenntnisse </span> </li>
-  </ul>
+  <div>
+    <p> Deutsch <span class="alt_text"> Muttersprache </span> </p>
+    <p> Englisch <span class="alt_text"> fortgeschrittene Sprachkenntnisse (B2/C1) </span> </p>
+    <p> Französisch<span class="alt_text"> Grundkenntnisse </span> </p>
+  </div>
+</div>
+<hr>
+
+<div class="flex-row mobile_column">
+  <h4 class="alt_text width_1"> Interessen&Hobbies </h4>
+  <p> Ballett, Muay Thay, Kickboxen </p>
+  
 </div>
 </section>
-
-
-<!-- <section id="Featured_Portfolio">
-  <h1> Some Projects </h1>>
-  Show three highlighted Pieces
-  LINK all pieces 
-
-</section> -->
 
 <footer class="flex-row align_spread">
   <p class="small_font alt_text "> Design & Code © Jennifer Schuler 2026 v01.02.00 </p>
   <a href="../impressum/" class="small_font alt_text "> Impressum </a>
-  <a href="../colophon/" class="small_font alt_text " > Colophon </a>
+  <a href="../colophon/" class="small_font alt_text "> Colophon </a>
 
  
   </footer>
