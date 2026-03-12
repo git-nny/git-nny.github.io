@@ -1,3 +1,93 @@
-body{
-  background-color: black;
+@font-face {
+  font-family: "Archivo";
+  src: url("../../_assets/fonts/Archivo-VariableFont.ttf")
+    format("truetype");
+  font-weight: 100 950;
+  font-stretch: 75% 125%;
+  font-style: medium;
+}
+
+:root{
+  /* Colors */
+  --darkBlue: #040241;
+  --offwhite: whitesmoke;
+  --neongreen: #70f06c;
+
+  /* colors semantic */
+  --text: var(--darkBlue);
+  --bg: var(--offwhite);
+
+  /*gaps and gutters*/
+  --gap_big: 4rem;
+  --gap_medium: 2rem;
+  --gap_small: 1rem;
+  --gap_mini: 0.75rem
+
+  /* font sizes */
+  --p_size: 1rem;
+}
+
+*{
+  margin: 0px;
+  font-family: 'Archivo',Helvetica, Arial, sans-serif;
+  color: var(--text);
+}
+html{
+  margin: 0 var(--gap_big) ;
+  background-color:var(--darkBlue) ;
+  font-size: 16px;
+}
+
+p {
+  font-size: var(--p_size);
+  line-height: 110%;
+}
+
+#sections {
+  position: relative;
+  display: inline-block;
+  width: 30%;
+  top: var(--gap_big);
+  z-index: 90;
+  margin-right: var(--gap_medium);
+
+}
+
+.step {
+  margin-bottom: 200px;
+  
+  padding: var(--gap_medium);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap_small);
+  background-color:var(--bg) ;
+  border-radius: 50px;
+}
+
+#vis {
+  display: inline-block;
+  position: fixed;
+  z-index: 1;
+  height: 100%;
+  width: 70%;
+  background-color: var(--bg);
+}
+
+svg{
+  background-color: #00000000;
+}
+circle {
+  r: 3px;
+  fill: var(--text)
+}
+
+.jury {
+  fill: var(--bg);
+  stroke: var(--text) 
+}
+
+
+line {
+  stroke: var(--text)
 }
