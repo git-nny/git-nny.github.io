@@ -1,30 +1,28 @@
 import * as d3 from "d3";
 //import {select, selectAll} from "d3";
-import { loadCSV } from 'arquero';
+import { loadCSV, op } from 'arquero';
+//import {scroller} from './scroller.js';
 
 const FILE = "./song_data.csv"
 const HEIGTH = window.innerHeight
 const WIDTH = window.innerWidth
 
-const xAxisTranslate = 500
+const xAxisTranslate = 10
 
 // load data as table
 let data = await loadCSV(FILE)
 // separate off all countries that participated in the finale since 2016
 data = data.filter( d => d.year >= 2016 ).filter( d => d.final_jury_points !== null ).reify()
 
-// implement scrolling with thanks to Jim Valladigham
 
 // console.log(data)
 const svg = d3.select('#datavis').attr('height', HEIGTH).attr('width', WIDTH)
 
 
-
-// Vis 1: full vis -> cleveland plot
-
+// all scales and stuff
 let xScale = d3.scaleLinear()
-    .domain([0, 500]) 
-    .range([0, 500]);
+    .domain([0, 800]) 
+    .range([0, WIDTH/2]);
 let yScale = d3.scaleLinear()
     .domain([500,0])
     .range([0, 500]);
@@ -42,7 +40,9 @@ let y_axis = d3.axisLeft()
     .attr('transform', 'translate(55,'+ xAxisTranslate + ')')
     .call(y_axis);
 
-svg.append('g')
+// 
+function drawClevelandPlot(){
+  svg.append('g')
   .attr('id', 'marks')
   .selectAll()
   .data(data)
@@ -74,6 +74,19 @@ d3.select('#marks')
     .attr("cx", function (d) { return xScale(d.final_total_points); } )
     .attr("cy", function (d) { return yScale(d.final_jury_points); } )
     .attr("r", 4)
+}
+function controversy (){
+  console.log(data.columnNames())
+  //get max value of column
+  
+}
+
+
+drawClevelandPlot()
+controversy()
+
+
+
 
 
 // Vis 2: controversy + check separate quartiles
