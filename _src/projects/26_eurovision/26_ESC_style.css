@@ -14,8 +14,11 @@
   --neongreen: #70f06c;
 
   /* colors semantic */
-  --text: var(--darkBlue);
-  --bg: var(--offwhite);
+  --text: var(--offwhite);
+  --bg: var(--darkBlue);
+  --vis_dark: var(--text)
+  --vis_light: var(--bg)
+  --vis_highlight: var(--neongreen)
 
   /*gaps and gutters*/
   --gap_big: 4rem;
@@ -37,7 +40,6 @@ html{
   background-color:var(--darkBlue) ;
   font-size: 16px;
 }
-
 p {
   font-size: var(--p_size);
   line-height: 110%;

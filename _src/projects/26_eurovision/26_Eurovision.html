@@ -3,49 +3,120 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Controversy by Kiwi </title>
+    <title> Controversy at the ESC </title>
     <link rel="stylesheet" href="./26_ESC_style.css">
     <link rel="icon" type="image/png" href="img\favicon.png">
   </head>
   <body>
-    <!-- <section>
-     THis is the landing page! 
-    </section> -->
-    <div id="sections" >
-      <section class="step">
-        <h1> This is the first section </h1>
-        <p> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
 
-      </section>
+  <h1> Jury vs Televote in the Eurovision Song Contest</h1>
+  <h2> Jury vs. Televote </h2>
+  <div>
+    <img>
+    <p> Jury</p>
+  </div>
+  <div>
+    <img>
+    <p> Televote</p>
+  </div>
+  <h2> Plot by </h2>
+  <div id="radioplot"> 
+    <input type="radio" name="plotby" id="rplottot" class="button" checked >
+    <label for="rplottot" class="h2"> Total Points</label> 
+    <input type="radio" name="plotby" id="rplotdif" class="button" onchange="changePlot(id)">
+    <label for="rplotdif" class="h2"> Controversy</label>    
+    <input type="radio" name="plotby" id="rplotbloc" class="button" onchange="changePlot(id)">
+    <label for="rplotbloc" class="h2"> Country </label>  
+  </div>
 
-      <section class="step">
-        <h1> This is the second section </h1>
-        <p> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-      </section>
-
-      <section class="step">
-        <h1> This is the third section </h1>
-        <p> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-      </section>
-      <section class="step">
-        <h1> This is the second section </h1>
-        <p> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-      </section>
-
-      <section class="step">
-        <h1> This is the third section </h1>
-        <p> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-      </section>
-    </div>
-  <div id="vis">
-    <svg id="datavis"></svg>
+  <h2> Year </h2>
+  <div>
+    <input type="checkbox" name='2016' id='cb2016' checked onchange="CheckCheckbox(name, id)">
+    <label for="cb2016" class="cblab h2">2016</label>
+    <input type="checkbox" name='2017'id='cb2017' checked onchange="CheckCheckbox (name, id)" >
+    <label for="cb2017" class="cblab h2 ">2017</label>
+    <input type="checkbox" name="2018" id ='cb2018' checked onchange="CheckCheckbox(name, id)">
+    <label for="cb2018" class="cblab h2">2018</label>
+    <input type="checkbox" name="2019" id ='cb2019' checked onchange="CheckCheckbox(name, id)">
+    <label for="cb2019" class="cblab h2">2019</label>
+    <input type="checkbox" name="2020" id ='cb2020' checked onchange="CheckCheckbox(name, id)">
+    <label for="cb2020" class="cblab h2">2020</label>
+    <input type="checkbox" name="2021" id ='cb2021' checked onchange="CheckCheckbox(name, id)">
+    <label for="cb2021" class="cblab h2">2021</label>
+    <input type="checkbox" name="2022" id ='cb2022' checked onchange="CheckCheckbox(name, id)">
+    <label for="cb2022"class="cblab h2">2022</label>
+    <input type="checkbox" name="2023" id ='cb2023' checked onchange="CheckCheckbox(name, id)">
+    <label for="cb2023" class="cblab h2">2023</label> 
   </div>
 
 
 
+  <div id="vis">
+    <svg id="datavis"></svg>
+  </div>
+
+  <div id="tooltip">
+            <div class="container">
+                <div id="country" class="h3"></div>                
+                
+                <img id=EV-flag-spez src="flags\1x1\Monaco.svg" height='60' width="60"  clip-path="url(#maske)">
+                
+                <svg id="Rahmen" height="60" width="60"> 
+                    <rect height="54" width="54" rx='100'  x="4" y="4"></rect></svg>
+                
+                <div id="song" class="h2"></div>
+                <div id="artist" class="h3"></div>
+                
+            </div>
+
+
+<script>
+let hideYear = function(name){
+                d3.selectAll('.y'+name)
+                .style('display', 'none');
+            }
+
+            let showYear = function(name){
+                d3.selectAll('.y'+name)
+                .style('display', 'block');
+            }
+
+            
+
+        let CheckCheckbox = function (name, id) {
+          let checkBox = document.getElementById(id);
+          if (checkBox.checked === true){
+                showYear(name);
+          } 
+        else {
+          hideYear(name);
+        }
+            } 
+</script>
+
+<!-- TODO: Revisit -->
+<div>
+  <div class="containerfoot" >
+                <h3 id="televotetext"> Juryvote</h3>
+                <svg id='telec' height="20" width="20"  >
+                 <rect id='rectl' width="15" height ='15' x="2.5" y='2.5' rx="100" >
+                 </rect>
+                </svg>
+                <h3 id="juryvotetext"> Televote</h3>
+                <svg id="juryc" height="20" width="20" >
+                <rect id='rect2' width="15" height ='15' x="2.5" y='2.5' rx="100"></rect>
+            </svg>
+           
+            <h3 for="Infob" class="Info h3 label">Source</h3>
+            <h3 id="InfoToggle"> The flags Icons were made by <a href="https://github.com/lipis">Panayiotis Lipiridis</a> and published under the <a href="license.txt">MIT Licence</a>. <br>
+                Data Source: <a href="https://eurovision.tv/history">eurovision.tv/history</a> - No Data available for 2020 </h3>
+    
+</div>
 
 
 
-<script src="./scroller.js" type="module"></script>
-<script src="./26_eurovision.js" type="module"></script>
+</div>
+</div>
+<script src="./26_eurovision.js" type="module" defer></script>
 </body>
+</html>
