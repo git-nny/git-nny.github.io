@@ -8,58 +8,64 @@
     <link rel="icon" type="image/png" href="img\favicon.png">
   </head>
   <body>
+  <section>
+    <h1> Jury vs Televote in the Eurovision Song Contest</h1>
+  </section>
+  <section> 
+      <h2> Jury vs. Televote </h2>
+    <div>
+      <img>
+      <p> Jury</p>
+    </div>
+    <div>
+      <img>
+      <p> Televote</p>
+    </div>
+    <h2> Plot by </h2>
+    <div id="radioplot"> 
+      <input type="radio" name="plotby" id="rplottot" class="button" checked >
+      <label for="rplottot" class="h2"> Total Points</label> 
+      <input type="radio" name="plotby" id="rplotdif" class="button">
+      <label for="rplotdif" class="h2"> Controversy</label>    
+      <input type="radio" name="plotby" id="rplotcountry" class="button">
+      <label for="rplotbloc" class="h2"> Country </label>  
+    </div>
 
-  <h1> Jury vs Televote in the Eurovision Song Contest</h1>
-  <h2> Jury vs. Televote </h2>
-  <div>
-    <img>
-    <p> Jury</p>
-  </div>
-  <div>
-    <img>
-    <p> Televote</p>
-  </div>
-  <h2> Plot by </h2>
-  <div id="radioplot"> 
-    <input type="radio" name="plotby" id="rplottot" class="button" checked >
-    <label for="rplottot" class="h2"> Total Points</label> 
-    <input type="radio" name="plotby" id="rplotdif" class="button" onchange="changePlot(id)">
-    <label for="rplotdif" class="h2"> Controversy</label>    
-    <input type="radio" name="plotby" id="rplotbloc" class="button" onchange="changePlot(id)">
-    <label for="rplotbloc" class="h2"> Country </label>  
-  </div>
+    <h2> Year </h2>
+    <div>
+      <input type="checkbox" name='2016' id='cb2016' checked >
+      <label for="cb2016" class="cblab h2">2016</label>
+      <input type="checkbox" name='2017'id='cb2017' checked  >
+      <label for="cb2017" class="cblab h2 ">2017</label>
+      <input type="checkbox" name="2018" id ='cb2018' checked>
+      <label for="cb2018" class="cblab h2">2018</label>
+      <input type="checkbox" name="2019" id ='cb2019' checked>
+      <label for="cb2019" class="cblab h2">2019</label>
+      <input type="checkbox" name="2020" id ='cb2020' checked>
+      <label for="cb2020" class="cblab h2">2020</label>
+      <input type="checkbox" name="2021" id ='cb2021' checked>
+      <label for="cb2021" class="cblab h2">2021</label>
+      <input type="checkbox" name="2022" id ='cb2022' checked>
+      <label for="cb2022"class="cblab h2">2022</label>
+      <input type="checkbox" name="2023" id ='cb2023' checked>
+      <label for="cb2023" class="cblab h2">2023</label> 
+    </div>
 
-  <h2> Year </h2>
-  <div>
-    <input type="checkbox" name='2016' id='cb2016' checked onchange="CheckCheckbox(name, id)">
-    <label for="cb2016" class="cblab h2">2016</label>
-    <input type="checkbox" name='2017'id='cb2017' checked onchange="CheckCheckbox (name, id)" >
-    <label for="cb2017" class="cblab h2 ">2017</label>
-    <input type="checkbox" name="2018" id ='cb2018' checked onchange="CheckCheckbox(name, id)">
-    <label for="cb2018" class="cblab h2">2018</label>
-    <input type="checkbox" name="2019" id ='cb2019' checked onchange="CheckCheckbox(name, id)">
-    <label for="cb2019" class="cblab h2">2019</label>
-    <input type="checkbox" name="2020" id ='cb2020' checked onchange="CheckCheckbox(name, id)">
-    <label for="cb2020" class="cblab h2">2020</label>
-    <input type="checkbox" name="2021" id ='cb2021' checked onchange="CheckCheckbox(name, id)">
-    <label for="cb2021" class="cblab h2">2021</label>
-    <input type="checkbox" name="2022" id ='cb2022' checked onchange="CheckCheckbox(name, id)">
-    <label for="cb2022"class="cblab h2">2022</label>
-    <input type="checkbox" name="2023" id ='cb2023' checked onchange="CheckCheckbox(name, id)">
-    <label for="cb2023" class="cblab h2">2023</label> 
-  </div>
+    <div id="vis">
+      <svg id="datavis"></svg>
+    </div>
+  </section>
+  
 
 
 
-  <div id="vis">
-    <svg id="datavis"></svg>
-  </div>
+  
 
   <div id="tooltip">
             <div class="container">
                 <div id="country" class="h3"></div>                
                 
-                <img id=EV-flag-spez src="flags\1x1\Monaco.svg" height='60' width="60"  clip-path="url(#maske)">
+                <!-- <img id=EV-flag-spez src="flags\1x1\Monaco.svg" height='60' width="60"  clip-path="url(#maske)"> -->
                 
                 <svg id="Rahmen" height="60" width="60"> 
                     <rect height="54" width="54" rx='100'  x="4" y="4"></rect></svg>
@@ -70,29 +76,9 @@
             </div>
 
 
-<script>
-let hideYear = function(name){
-                d3.selectAll('.y'+name)
-                .style('display', 'none');
-            }
 
-            let showYear = function(name){
-                d3.selectAll('.y'+name)
-                .style('display', 'block');
-            }
 
-            
 
-        let CheckCheckbox = function (name, id) {
-          let checkBox = document.getElementById(id);
-          if (checkBox.checked === true){
-                showYear(name);
-          } 
-        else {
-          hideYear(name);
-        }
-            } 
-</script>
 
 <!-- TODO: Revisit -->
 <div>
