@@ -44,7 +44,7 @@
 }
 html{
   background-color:var(--darkBlue) ;
-  font-size: 16px;
+  font-size: 16px
 }
 body{
   margin: 1rem;
@@ -95,6 +95,9 @@ h2 {
 #head {
   padding: var(--gap_medium) 0px;
   user-select: none;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 /* Style Radio Buttons and Checkbox*/
 input[type=radio] {
@@ -111,6 +114,7 @@ input[type=radio] + label {
   border: var(--stroke-width) solid var(--text);
   border-radius: var(--radius);
   transition: all 400ms;
+  font-size: clamp(12px, 1vw, 20px);
 }
 /* broken FIX ME */
 input[type=radio]:checked + label {
@@ -131,14 +135,15 @@ input[type="checkbox"]+ label{
     color:var(--text);
     padding: var(--button-padding);
     transition: all 400ms;
+    font-size: clamp(12px, 1vw, 16px);
 }
 
 input[type="checkbox"]:checked + label {
     background-color:var(--text);
     color:var(--bg);
-    border-color: none;
+    border-color: transparent;
     border: var(--stroke-width) solid var(--bg);
-    border-radius: var(--radius)
+    border-radius: var(--radius);
 } 
 
 
@@ -148,6 +153,10 @@ input[type="checkbox"]:checked + label {
   display: block;
   background-color: var(--vis_light);
   border-radius: var(--radius);
+}
+.label{
+  fill: var(--vis_dark);
+
 }
 
 circle {
@@ -182,8 +191,12 @@ circle {
     stroke-dasharray: 2;
     color:var(--vis_dark)
 }
-text {
-  color: red;
+.median {
+  width: 1.5rem;
+  height: 0.5rem;
+  fill: var(--vis_highlight);
+  z-index: -1;
+  border-radius: 100%;
 }
 
 /* Tooltip */

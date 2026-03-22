@@ -14,7 +14,10 @@ layout: case_study.njk
 - The Eurovision Song Contest is planned as an international, apolitical exchange and celebration of (mostly pop) music, bringing acts from selected members of the European Broadcasting Union (and Australia).
 - The year is 2023, and rating artistic acts is inherently difficult. The split between a public and professional vote had just caused a small controversy. This project explores how often the national juries and televote think alike.
 - The project is written in HTML, CSS and JavaScript (using d3.js), which I taught myself in a few weeks during the building process. 
-- This page is currently under rework - a 2026 version is planned.
+- The project is currently being reworked to be a) more responsive and b) written in a more maintainable way.
+
+
+<a href="../projects/26_eurovision/26_Eurovision.html" class="button"> View Project here</a>
 ## Concept
 The Eurovision Song Contest has a long history of bringing people together, both in the arena and at home in front of the TV screen. Just as long is the history of its controversies - and it regularly includes the voting system. Since the last rule change in 2016, the winner is decided by two sets between _null_ and _douze_ points by a jury of industry professionals and a televote by regular people at home. In 2023, the discussion de jour centred on this separation, as both votes diverged between front runners Loreen and Käärijä. I had not been personally involved before, so I wondered how regularly that happens and centred my visualisation on it.
 
@@ -37,6 +40,5 @@ It needs to be said that I had no real coding experience prior to this project, 
 I cannot understate how little I knew and how determined I was to make it work - I barely knew enough JavaScript to console.log my way through, and I had no idea what a pip was or that I had to install Python first back then. Still, after it was finished, it was clear that this was the thing I wanted to do.  
 The original code was never uploaded anywhere and subjected to the information is beautiful awards for the category Arts, Entertainment and Culture with screenshots and videos (and it made the shortlist!).
 
-*A 2026 rework is currently queued, improving on the original code, responsiveness, and bringing in new insights from my data science studies.*
 
-<a href="../projects/26_eurovision/26_Eurovision.html"> View Project
+

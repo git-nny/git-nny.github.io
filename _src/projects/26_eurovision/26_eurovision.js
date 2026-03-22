@@ -36,7 +36,11 @@ data = data
   .derive({ controversy: d => op.abs(d.final_televote_points - d.final_jury_points)})
   .orderby( 'controversy')
   .derive({rank: d => `${op.row_number()}` })
+data = data.groupby('country')
+  .derive({median_country: d => `${op.median(d.final_jury_points)}` })
+data = data.ungroup()
 
+data.print({columns: ["country", "median_country"]})
 // getting an array of numbers for the scale Point Scale
 for (let i = 0; i<=NumTeilnehmer; i++){
     NumTeilnehmerArray.push(`${i}`);
@@ -129,13 +133,13 @@ function drawCountryAxis(){
 
 //Text
 SVG.append('text')
-    .attr("class", "xlabel label h2")
+    .attr("class", "xlabel label")
         .attr("text-anchor", "end")
         .attr("x", WIDTH/2)
         .attr("y", HEIGTH-  REM )
         .text("Total Points");       
 SVG.append("text")
-        .attr("class", "ylabel label h2")
+        .attr("class", "ylabel label ")
         .attr("text-anchor", "middle")
         .attr("transform", "rotate(-90)")
         .attr("y", 2* REM)
@@ -152,6 +156,8 @@ function resetModus(){
   d3.selectAll(".jury, .televote")
     .attr('opacity', 1)
     .attr('visibility', 'visible')
+
+  exitMedian()
 }
 function drawInitialPlot(){
   drawLinearAxis()
@@ -262,6 +268,7 @@ function plotDifference () {
 function plotCountry (){
   resetModus()
   drawCountryAxis()
+  showMedianPoints()
             
   SVG.selectAll('.connect').transition()
     .duration(800).ease(d3.easeBack)
@@ -281,7 +288,25 @@ function plotCountry (){
   SVG.select('.xlabel').transition().text('Country');
   SVG.select('.ylabel').transition().text('Points per mode');
 }
-
+function showMedianPoints (){
+  d3.select('#marks')
+  .selectAll()
+  .data(data)
+  .enter()
+  .append('rect')
+    .attr('class', 'median')
+    .attr("x", function (d) { return (xScaleO(d.country) - REM*1.5/2); } )
+    .attr("y", function (d) { return yScale(d.median_country); } )
+    .attr('opacity', '1')
+    .lower()
+}
+function exitMedian(){
+  d3.selectAll('.median')
+    .transition()
+    .duration(200)
+    .ease(d3.easeBack)
+    .attr('opacity', '0')
+}
 
 // Buttons + Functions
 drawInitialPlot()
@@ -325,9 +350,6 @@ for (let checkbox of document.querySelectorAll("input[type=checkbox]")) {
   checkbox.addEventListener('change', () => { toggleCheckbox(checkbox.name, checkbox.id) })
 }
 
-
-
-
 function startToolTip(year, country, artist_name, song_name){
      d3.select("#tooltip").style('display', 'block');
      d3.select("#country").html(country + ' ' + year );
@@ -338,9 +360,7 @@ function startToolTip(year, country, artist_name, song_name){
      d3.selectAll('.y'+ year).transition().attr('r', '6').style('opacity', '1');
     //  d3.select('#EV-flag-spez').attr('src', 'flags/1x1/' + country + '.SVG')
     
-}
-    
-    
+}  
 function stopToolTip (year){
     d3.select("#tooltip").style('display', 'none');
     d3.selectAll('circle').transition().attr('r', '4').style('opacity','1');
@@ -348,10 +368,8 @@ function stopToolTip (year){
         
  
      } 
-        
 stopToolTip(); 
-  
-    let tooltip = d3.select('#datavis')
+let tooltip = d3.select('#datavis')
     .on('mousemove', function(event){
         let coords = d3.pointer(event);
         d3.select("#tooltip").style('top', 50+coords[1]+"px")
