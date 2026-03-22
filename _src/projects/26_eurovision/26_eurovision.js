@@ -20,7 +20,7 @@ const MaxX = 800;
 const MaxY = 550; 
 
 let AllCountries = ['','Albania', 'Armenia', 'Australia', 'Austria', 'Azerbaijan', 'Belarus', 'Belgium','Bulgaria', 'Croatia',
-'Cyprus', 'Czechia', 'Denmark', 'Estonia', 'Finland', 'France', 'Georgia', 'Germany', 'Greece', 'Hungary', 'Iceland', 'Ireland', 'Israel', 'Italy',
+'Cyprus', 'Czech Republic', 'Denmark', 'Estonia', 'Finland', 'France', 'Georgia', 'Germany', 'Greece', 'Hungary', 'Iceland', 'Ireland', 'Israel', 'Italy',
 'Latvia', 'Lithuania', 'Malta', 'Moldova', 'Netherlands', 'N. Macedonia', 'Norway', 'Poland', 'Portugal', 'Romania',
 'Russia', 'San Marino', 'Serbia', 'Slovenia', 'Spain', 'Sweden', 'Switzerland', 'Ukraine', 'United Kingdom', ' ']; 
 let NumTeilnehmer = 179+2;
@@ -30,7 +30,7 @@ const jitterWidth2 = -3;
 
 //load data as table and get relevant participants since 2016
 let data = await aq.loadCSV(FILE)
-data = data.filter( d => d.year >= 2016 ).filter( d => d.final_jury_points !== null ).reify()
+data = data.filter( d => d.year >= 2016 ).filter( d => d.final_total_points !== null ).reify()
 
 data = data
   .derive({ controversy: d => op.abs(d.final_televote_points - d.final_jury_points)})
