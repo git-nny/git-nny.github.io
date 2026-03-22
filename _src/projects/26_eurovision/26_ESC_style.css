@@ -25,6 +25,7 @@
   --gap_medium: 2rem;
   --gap_small: 1rem;
   --gap_mini: 0.8rem;
+  --gap_xs: 0.4rem;
   --gap_xxs: 0.2rem;
 
   /* font sizes */
@@ -63,6 +64,9 @@ h2 {
   display: flex;
   flex-direction: column;
   gap: var(--gap_small);
+}
+.xs_gap {
+  gap: var(--gap_xs);
 }
 .reduced_gap {
   gap: var(--gap_xxs);
@@ -105,13 +109,13 @@ input[type=radio] + label {
   background-color: var(--bg);
   color: var(--text);
   border: var(--stroke-width) solid var(--text);
-  border-radius: var(--radius)
+  border-radius: var(--radius);
+  transition: all 400ms;
 }
 /* broken FIX ME */
 input[type=radio]:checked + label {
   background-color: var(--text);
   color: var(--bg);
-  border: none;
 }
 
 input[type=checkbox]{
@@ -126,7 +130,7 @@ input[type="checkbox"]+ label{
     border-radius: var(--radius);
     color:var(--text);
     padding: var(--button-padding);
-    
+    transition: all 400ms;
 }
 
 input[type="checkbox"]:checked + label {
@@ -146,12 +150,14 @@ input[type="checkbox"]:checked + label {
   border-radius: var(--radius);
 }
 
-
 circle {
   r: 4px;
   stroke-width: var(--stroke-width);
 }
+.domain{
+  display: none;  
 
+}
 .jury {
   fill: var(--vis_dark);
   stroke: var(--vis_dark);
@@ -165,10 +171,63 @@ circle {
   stroke: var(--darkBlue);
   stroke-opacity: 1;
   stroke-dasharray: 0;
+  stroke-linecap: round;
+}
+.tick{
+  font-size: 10px;
+  color: var(--vis_dark);
 }
 .tick>line{
     opacity: .25;
     stroke-dasharray: 2;
     color:var(--vis_dark)
 }
+text {
+  color: red;
+}
 
+/* Tooltip */
+#tooltip {
+  display: block;
+  background: #040241;
+  color: whitesmoke;
+  height: auto;
+  width: 230px;
+  padding: var(--button-padding);
+  z-index: 100;
+  position: absolute;
+  border-radius: var(--radius);
+  font-size: 0.75rem;
+}
+#country{
+font-family: sans-serif;
+margin: 0 auto;
+text-align: center;
+position:relative;
+}
+#song{
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+#country:before{
+content: "";
+display:block;
+width: 4em;
+height:1px;
+background: var(--text);
+position: absolute;
+left: 0;
+top: 50%;
+z-index: -2;
+}
+#country:after{
+content: "";
+display:block;
+width: 4em;
+height:1px;
+background: var(--text);
+position: absolute;
+right: 0;
+top: 50%;
+z-index: -2;
+}

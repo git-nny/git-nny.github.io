@@ -9,12 +9,13 @@ const MARGIN = 2* REM
 const HEIGTH = window.innerHeight - document.querySelector('#head').clientHeight - MARGIN
 const WIDTH = window.innerWidth - 2*MARGIN
 const SVG = d3.select('#datavis').attr('height', HEIGTH).attr('width', WIDTH)
+const VISWIDTH = [0, WIDTH - 4*MARGIN]
+const VISHEIGHT = [0, HEIGTH - 2.5*MARGIN ]
 
 
 // magic numbers TODO fix!
-const xAxisTranslate = HEIGTH - 3*REM;
-const yAxisTranslate = 3 *REM
-const xAxisTranslateO = HEIGTH - 25;
+const xAxisTranslate = 5*REM;
+const yAxisTranslate = 2 *REM
 const MaxX = 800; 
 const MaxY = 550; 
 
@@ -44,47 +45,49 @@ for (let i = 0; i<=NumTeilnehmer; i++){
 // setting up X and Y scales for linear and point modes
 let yScale = d3.scaleLinear()
     .domain([MaxY,0])
-    .range([0, HEIGTH ]);
-let yScaleS = d3.scaleLinear()
+    .range(VISHEIGHT);
+let yScaleS = d3.scaleLinear() 
     .domain([260,0])
-    .range([0, HEIGTH ]);
+    .range(VISHEIGHT);
 
 let xScale = d3.scaleLinear()
     .domain([0, MaxX]) 
-    .range([0, WIDTH -  MARGIN]);
+    .range(VISWIDTH);
+let yScaleO = d3.scaleLinear()
+    .domain([MaxY,0])
+    .range([0, HEIGTH - 5*REM ]);
 
-let xScaleO = d3.scalePoint()
+let xScaleO = d3.scalePoint() 
     .domain(AllCountries)
-    .range([0, WIDTH]); 
+    .range(VISWIDTH); 
 
-let xScaleS = d3.scalePoint()
+let xScaleS = d3.scalePoint() 
     .domain (NumTeilnehmerArray)
-    .range([0, WIDTH]); 
+    .range(VISWIDTH); 
 
 
 //setting up X and Y axis for linear and point modes
   let x_axis = d3.axisBottom()
       .scale(xScale)
-      .tickSize(-HEIGTH);
-      
+      .tickSize((VISHEIGHT[1]));
   let x_axisS = d3.axisBottom()
       .scale(xScaleS)
-      .tickSize(-HEIGTH);
+      .tickSize((VISHEIGHT[1]));
   let x_axisO = d3.axisBottom()
       .scale(xScaleO)
-      .tickSize(-HEIGTH);
+      .tickSize(- (VISHEIGHT[1]));
 
   //Axis Y
   let y_axis = d3.axisLeft()
       .scale(yScale)
-      .tickSize(-WIDTH + 3* MARGIN);
+      .tickSize(-(VISWIDTH[1]));
       
   let y_axisO = d3.axisLeft()
-      .scale(yScale)
-      .tickSize(-WIDTH);
+      .scale(yScaleO)
+      .tickSize(-(VISWIDTH[1]));
   let y_axisS = d3.axisLeft()
       .scale(yScaleS)
-      .tickSize(-WIDTH);
+      .tickSize(-(VISWIDTH[1]));
 
 function clearAxis(){
   SVG.selectAll('#xaxis').remove();
@@ -93,13 +96,35 @@ function clearAxis(){
 function drawLinearAxis(){
   clearAxis()
   SVG.append('g')
-    .attr('transform', `translate(${3*REM}, ${xAxisTranslate})`)
+    .attr('transform', `translate(${xAxisTranslate}, ${yAxisTranslate})`)
     .call(x_axis).attr('id', 'xaxis')
 
   SVG.append('g')
     .attr('id', 'yaxis')
-    .attr('transform', `translate(${yAxisTranslate}, ${REM})`)
+    .attr('transform', `translate(${xAxisTranslate}, ${yAxisTranslate})`)
     .call(y_axis);
+}
+
+function drawControversyAxis(){
+  clearAxis()
+  SVG.append('g')
+    .attr('transform', `translate(${xAxisTranslate}, ${yAxisTranslate})`)
+    .call(x_axisS).attr("id","xaxis") // TODO Fix me?
+  SVG.append('g')
+    .attr('transform', `translate(${xAxisTranslate}, ${yAxisTranslate})`)
+    .call(y_axisS).attr('id', 'yaxis')
+}
+
+function drawCountryAxis(){
+  clearAxis()
+  SVG.append('g')
+    .call(x_axisO).attr("id","xaxis")
+    .attr('transform', `translate(${xAxisTranslate}, ${VISHEIGHT[1] - yAxisTranslate})`)
+
+  SVG.selectAll('#xaxis .tick text').attr("transform", 'translate(0,25)rotate(-45)');
+  SVG.append('g')
+    .attr('id', 'yaxis').call(y_axisO)
+    .attr('transform', `translate(${xAxisTranslate}, ${yAxisTranslate - 4*REM})`)
 }
 
 //Text
@@ -107,17 +132,27 @@ SVG.append('text')
     .attr("class", "xlabel label h2")
         .attr("text-anchor", "end")
         .attr("x", WIDTH/2)
-        .attr("y", HEIGTH-10 )
+        .attr("y", HEIGTH-  REM )
         .text("Total Points");       
 SVG.append("text")
         .attr("class", "ylabel label h2")
         .attr("text-anchor", "middle")
         .attr("transform", "rotate(-90)")
-        .attr("y", 17)
+        .attr("y", 2* REM)
         .attr("dy", "0")
         .attr('x', -HEIGTH/2)
         .text('Points per mode');
 
+        
+function resetModus(){
+  d3.selectAll('.connect')
+    .attr('stroke-width', '2')
+    .attr('visibility', 'visible')
+
+  d3.selectAll(".jury, .televote")
+    .attr('opacity', 1)
+    .attr('visibility', 'visible')
+}
 function drawInitialPlot(){
   drawLinearAxis()
 
@@ -132,6 +167,7 @@ function drawInitialPlot(){
     .attr ('y1', function (d){return yScale(d.final_jury_points);})
     .attr('x2', function (d){return xScale(d.final_total_points);})
     .attr ('y2', function (d){return yScale(d.final_televote_points);})
+    .attr('stroke-width', '2')
 
 d3.select('#marks')
   .selectAll()
@@ -141,6 +177,8 @@ d3.select('#marks')
     .attr('class', (d) => {return 'y'+d.year + ' televote' })
     .attr("cx", function (d) { return xScale(d.final_total_points); } )
     .attr("cy", function (d) { return yScale(d.final_televote_points); } )
+    .on('mouseover', (event, d) => startToolTip(d.year,d.country,d.artist_name, d.song_name))
+    .on('mouseout', (event, d) => stopToolTip(d.country))
 
 d3.select('#marks')
   .selectAll()
@@ -150,14 +188,14 @@ d3.select('#marks')
     .attr('class', (d) => {return 'y'+d.year + ' jury' })
     .attr("cx", function (d) { return xScale(d.final_total_points); } )
     .attr("cy", function (d) { return yScale(d.final_jury_points); } )
+    .on('mouseover', (event, d) => startToolTip(d.year,d.country,d.artist_name, d.song_name))
+    .on('mouseout', (event, d) => stopToolTip(d.country))
 
-  d3.select('#marks').attr('transform', `translate(${3*REM}, ${-yAxisTranslate})`)
+  d3.select('#marks').attr('transform', `translate(${xAxisTranslate}, ${yAxisTranslate})`)
 }
-
-drawInitialPlot()
-
 function plotTotalPoints (){
   drawLinearAxis()
+  resetModus()
     
   SVG.selectAll('.jury').transition()
     .duration(800).ease(d3.easeBack)
@@ -177,44 +215,53 @@ function plotTotalPoints (){
     .attr('y1', function (d) {return yScale (d.final_jury_points)})
     .attr('x2', function (d) {return xScale( d.final_total_points)} )
     .attr('y2', (d) => yScale(d.final_televote_points))
+    
 
+  d3.select('#marks').attr('transform', `translate(${xAxisTranslate}, ${yAxisTranslate})`)
 
   SVG.select('.xlabel').transition().text('Total Points');
   SVG.select('.ylabel').transition().text('Points per mode');
 }
 function plotDifference () {
-  clearAxis()
-  SVG.append('g').attr("id","xaxis").attr('transform', 'translate(55,'+ xAxisTranslate +')').call(x_axisS); // TODO Fix me?
-  SVG.append('g').attr('id', 'yaxis').attr('transform', 'translate(55,60)').call(y_axisS);
+  resetModus()
+  drawControversyAxis()
 
   SVG.selectAll('.televote')
     .transition().duration(800).ease(d3.easeBack)
     .attr('cy', yScaleS('0'))
     .attr('cx', function(d) {return xScaleS(d.rank)})
+    .attr('visibility', 'hidden')
 
   SVG.selectAll('.jury')
     .transition().duration(800).ease(d3.easeBack)
     .attr('cy', function (d) { return yScaleS( Math.abs(d.final_televote_points-d.final_jury_points))}) 
     .attr('cx', function(d) {return xScaleS ( d.rank)})
+    .attr('visibility', 'hidden')
 
-  SVG.selectAll('.connect').transition().duration(800).ease(d3.easeBack)
+  SVG.selectAll('.connect')
+    .transition().duration(800).ease(d3.easeBack)
     .attr('visibility', 'visible')
     .attr('opacity', '1')
       .attr('x1', function (d) { return xScaleS(d.rank);} )
       .attr('y1', yScale('0'))
       .attr('x2', function (d) {return xScaleS( d.rank);} )
       .attr('y2', function(d) {return yScaleS( d.controversy)})
+      .attr('stroke-width', '5')
 
-  SVG.selectAll('.xaxis .tick text').attr('visibility', 'hidden');
+    SVG.selectAll('.connect')
+      .on('mouseover', (event, d) => startToolTip(d.year,d.country,d.artist_name, d.song_name))
+      .on('mouseout', (event, d) => stopToolTip(d.country))
+
+  d3.select('#marks').attr('transform', `translate(${xAxisTranslate}, ${yAxisTranslate})`)
+
+  SVG.selectAll('#xaxis .tick text').attr('opacity', '0');
   SVG.select('.xlabel').text('Controversy');
   SVG.select('.ylabel').text('Difference');
 
 }
 function plotCountry (){
-  clearAxis()
-  SVG.append('g').attr("id","xaxis").call(x_axisO);
-  SVG.selectAll('#xaxis .tick text').attr("transform", 'translate(0,25)rotate(-45)');
-  SVG.append('g').attr('id', 'yaxis').call(y_axisO);
+  resetModus()
+  drawCountryAxis()
             
   SVG.selectAll('.connect').transition()
     .duration(800).ease(d3.easeBack)
@@ -229,12 +276,15 @@ function plotCountry (){
     .attr('cx', function(d){return xScaleO (d.country)+ xScaleO.bandwidth()/2 - Math.random()*jitterWidth2})
     .attr('cy', function(d){return yScale (d.final_televote_points)})
 
+  d3.select('#marks').attr('transform', `translate(${xAxisTranslate}, ${-2*REM})`)
+
   SVG.select('.xlabel').transition().text('Country');
   SVG.select('.ylabel').transition().text('Points per mode');
 }
 
 
 // Buttons + Functions
+drawInitialPlot()
 function changePlot (id){
   if (id === 'rplottot'  ){
     plotTotalPoints()
@@ -278,67 +328,32 @@ for (let checkbox of document.querySelectorAll("input[type=checkbox]")) {
 
 
 
-// function startToolTip(year, country, artist_name, song_name){
-//      d3.select("#tooltip").style('display', 'block');
-//      d3.select("#country").html(country + ' ' + year );
-//      d3.select('#artist').html(artist_name);
-//      d3.select('#song').html(song_name); 
-//      d3.selectAll('circle').transition().attr('r', '3').style('opacity', '.1');
-//      d3.selectAll('.connect').transition().style('opacity', '.05');
-//      d3.selectAll('.y'+ year).transition().attr('r', '6').style('opacity', '1');
-//     //  d3.select('#EV-flag-spez').attr('src', 'flags/1x1/' + country + '.SVG')
+function startToolTip(year, country, artist_name, song_name){
+     d3.select("#tooltip").style('display', 'block');
+     d3.select("#country").html(country + ' ' + year );
+     d3.select('#artist').html(artist_name);
+     d3.select('#song').html(song_name); 
+     d3.selectAll('circle').transition().attr('r', '3').style('opacity', '.1');
+     d3.selectAll('.connect').transition().style('opacity', '.05');
+     d3.selectAll('.y'+ year).transition().attr('r', '6').style('opacity', '1');
+    //  d3.select('#EV-flag-spez').attr('src', 'flags/1x1/' + country + '.SVG')
     
-// }
+}
     
     
-// function stopToolTip (year){
-//     d3.select("#tooltip").style('display', 'none');
-//     d3.selectAll('circle').transition().attr('r', '4').style('opacity','1');
-//     d3.selectAll('.connect').transition().attr('r', '4').style('opacity','1');
+function stopToolTip (year){
+    d3.select("#tooltip").style('display', 'none');
+    d3.selectAll('circle').transition().attr('r', '4').style('opacity','1');
+    d3.selectAll('.connect').transition().attr('r', '4').style('opacity','1');
         
  
-//      } 
+     } 
         
-// stopToolTip(); 
+stopToolTip(); 
   
-//     let tooltip = d3.select('#datavis')
-//     .on('mousemove', function(event){
-//         let coords = d3.pointer(event);
-//         d3.select("#tooltip").style('top', 50+coords[1]+"px")
-//                              .style('left', 45+ coords[0]+"px");
-//             })
-
-  
-
-
-  
-
-
-// all scales and stuff
-// let xScale = d3.scaleLinear()
-//     .domain([0, 800]) 
-//     .range([0, WIDTH/2]);
-// let yScale = d3.scaleLinear()
-//     .domain([500,0])
-//     .range([0, 500]);
-
-// let x_axis = d3.axisBottom()
-//     .scale(xScale)
-// SVG.append('g')
-//     .attr('transform', 'translate(55,'+ xAxisTranslate + ')')
-//     .call(x_axis).attr('class', 'xaxis')
-
-// let y_axis = d3.axisLeft()
-//     .scale(yScale)
-//     SVG.append('g')
-//     .attr('id', 'yaxis')
-//     .attr('transform', 'translate(55,'+ xAxisTranslate + ')')
-//     .call(y_axis);
-
-// // 
-
-// function controversy (){
-//   console.log(data.columnNames())
-//   //get max value of column
-  
-// }
+    let tooltip = d3.select('#datavis')
+    .on('mousemove', function(event){
+        let coords = d3.pointer(event);
+        d3.select("#tooltip").style('top', 50+coords[1]+"px")
+                             .style('left', 45+ coords[0]+"px");
+            })
