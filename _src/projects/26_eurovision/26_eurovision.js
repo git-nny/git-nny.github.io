@@ -4,21 +4,24 @@ import {op} from 'arquero'
 
 // Good variables
 const FILE = "./song_data.csv"
-const HEIGTH = window.innerHeight
-const WIDTH = window.innerWidth
+let REM = window.getComputedStyle(document.querySelector('body')).fontSize.slice(0,2)
+const MARGIN = 2* REM
+const HEIGTH = window.innerHeight - document.querySelector('#head').clientHeight - MARGIN
+const WIDTH = window.innerWidth - 2*MARGIN
 const SVG = d3.select('#datavis').attr('height', HEIGTH).attr('width', WIDTH)
 
-// Questionable variables
-let xAxisTranslate = HEIGTH - 80;
-let xAxisTranslateO = HEIGTH - 110;
 
 // magic numbers TODO fix!
-const MaxX = 850; //??
-const MaxY = 450;
+const xAxisTranslate = HEIGTH - 3*REM;
+const yAxisTranslate = 3 *REM
+const xAxisTranslateO = HEIGTH - 25;
+const MaxX = 800; 
+const MaxY = 550; 
+
 let AllCountries = ['','Albania', 'Armenia', 'Australia', 'Austria', 'Azerbaijan', 'Belarus', 'Belgium','Bulgaria', 'Croatia',
- 'Cyprus', 'Czechia', 'Denmark', 'Estonia', 'Finland', 'France', 'Georgia', 'Germany', 'Greece', 'Hungary', 'Iceland', 'Ireland', 'Israel', 'Italy',
-  'Latvia', 'Lithuania', 'Malta', 'Moldova', 'Netherlands', 'N. Macedonia', 'Norway', 'Poland', 'Portugal', 'Romania',
-   'Russia', 'San Marino', 'Serbia', 'Slovenia', 'Spain', 'Sweden', 'Switzerland', 'Ukraine', 'United Kingdom', ' ']; 
+'Cyprus', 'Czechia', 'Denmark', 'Estonia', 'Finland', 'France', 'Georgia', 'Germany', 'Greece', 'Hungary', 'Iceland', 'Ireland', 'Israel', 'Italy',
+'Latvia', 'Lithuania', 'Malta', 'Moldova', 'Netherlands', 'N. Macedonia', 'Norway', 'Poland', 'Portugal', 'Romania',
+'Russia', 'San Marino', 'Serbia', 'Slovenia', 'Spain', 'Sweden', 'Switzerland', 'Ukraine', 'United Kingdom', ' ']; 
 let NumTeilnehmer = 179+2;
 const NumTeilnehmerArray = [];
 const jitterWidth = 3;
@@ -33,7 +36,6 @@ data = data
   .orderby( 'controversy')
   .derive({rank: d => `${op.row_number()}` })
 
-console.log(data.column('rank'))
 // getting an array of numbers for the scale Point Scale
 for (let i = 0; i<=NumTeilnehmer; i++){
     NumTeilnehmerArray.push(`${i}`);
@@ -49,7 +51,7 @@ let yScaleS = d3.scaleLinear()
 
 let xScale = d3.scaleLinear()
     .domain([0, MaxX]) 
-    .range([0, WIDTH]);
+    .range([0, WIDTH -  MARGIN]);
 
 let xScaleO = d3.scalePoint()
     .domain(AllCountries)
@@ -64,9 +66,7 @@ let xScaleS = d3.scalePoint()
   let x_axis = d3.axisBottom()
       .scale(xScale)
       .tickSize(-HEIGTH);
-      SVG.append('g')
-      .attr('transform', 'translate(55,'+ xAxisTranslate + ')')
-      .call(x_axis).attr('class', 'xaxis')
+      
   let x_axisS = d3.axisBottom()
       .scale(xScaleS)
       .tickSize(-HEIGTH);
@@ -77,12 +77,8 @@ let xScaleS = d3.scalePoint()
   //Axis Y
   let y_axis = d3.axisLeft()
       .scale(yScale)
-      .tickSize(-WIDTH);
+      .tickSize(-WIDTH + 3* MARGIN);
       
-      SVG.append('g')
-      .attr('id', 'yaxis')
-      .attr('transform', 'translate(55,60)')
-      .call(y_axis);
   let y_axisO = d3.axisLeft()
       .scale(yScale)
       .tickSize(-WIDTH);
@@ -90,6 +86,21 @@ let xScaleS = d3.scalePoint()
       .scale(yScaleS)
       .tickSize(-WIDTH);
 
+function clearAxis(){
+  SVG.selectAll('#xaxis').remove();
+  SVG.selectAll('#yaxis').remove();
+}
+function drawLinearAxis(){
+  clearAxis()
+  SVG.append('g')
+    .attr('transform', `translate(${3*REM}, ${xAxisTranslate})`)
+    .call(x_axis).attr('id', 'xaxis')
+
+  SVG.append('g')
+    .attr('id', 'yaxis')
+    .attr('transform', `translate(${yAxisTranslate}, ${REM})`)
+    .call(y_axis);
+}
 
 //Text
 SVG.append('text')
@@ -108,141 +119,120 @@ SVG.append("text")
         .text('Points per mode');
 
 function drawInitialPlot(){
+  drawLinearAxis()
+
   SVG.append('g')
   .attr('id', 'marks')
   .selectAll()
   .data(data)
   .enter()
   .append('line')
-    .attr('class', 'connect')
+    .attr('class', (d) => {return 'y'+d.year + ' connect' })
     .attr('x1', function (d){return xScale(d.final_total_points);})
     .attr ('y1', function (d){return yScale(d.final_jury_points);})
     .attr('x2', function (d){return xScale(d.final_total_points);})
     .attr ('y2', function (d){return yScale(d.final_televote_points);})
-    .style('stroke-width', 1.5);
-  
 
 d3.select('#marks')
   .selectAll()
   .data(data)
   .enter()
   .append('circle')
-    .attr('class', 'televote')
+    .attr('class', (d) => {return 'y'+d.year + ' televote' })
     .attr("cx", function (d) { return xScale(d.final_total_points); } )
     .attr("cy", function (d) { return yScale(d.final_televote_points); } )
-    .attr("r", 4)
 
 d3.select('#marks')
   .selectAll()
   .data(data)
   .enter()
   .append('circle')
-    .attr('class', 'jury')
+    .attr('class', (d) => {return 'y'+d.year + ' jury' })
     .attr("cx", function (d) { return xScale(d.final_total_points); } )
     .attr("cy", function (d) { return yScale(d.final_jury_points); } )
-    .attr("r", 4)
+
+  d3.select('#marks').attr('transform', `translate(${3*REM}, ${-yAxisTranslate})`)
 }
 
 drawInitialPlot()
 
 function plotTotalPoints (){
-  xScale.domain([0, MaxX])
-  SVG.selectAll('.xaxis').remove();
-  SVG.append('g').attr("class","xaxis")
-    .attr('transform', 'translate(55,'+ xAxisTranslate + ')')
-    .call(x_axis);
-
-  SVG.selectAll('#yaxis').remove();
-  SVG.append('g').attr('id', 'yaxis')
-  .attr('transform', 'translate(55,60)').call(y_axis);
-  SVG.selectAll('.connect').transition().attr('visibility', 'visible');
-
-        
+  drawLinearAxis()
+    
   SVG.selectAll('.jury').transition()
-    .attr("cy", function (d) { return yScale(d.final_jury_points); } ) 
+    .duration(800).ease(d3.easeBack)
+    .attr("cy", function (d) { return yScale(d.final_jury_points) } ) 
     .attr('cx', function(d) {return xScale(d.final_total_points)})
-    .attr('transform', 'translate(55,60)');
   
   SVG.selectAll('.televote').transition()
+    .duration(800).ease(d3.easeBack)
     .attr("cy", function (d) { return yScale(d.final_televote_points); } ) 
     .attr('cx', function(d) {return xScale(d.final_total_points)})
-    .attr('transform', 'translate(55,60)');
+
   SVG.selectAll('.connect').transition()
+    .duration(800).ease(d3.easeBack)
+    .attr('visibility', 'visible')
     .attr('opacity', '1')
     .attr('x1', function (d) { return xScale( d.final_total_points)} )
     .attr('y1', function (d) {return yScale (d.final_jury_points)})
     .attr('x2', function (d) {return xScale( d.final_total_points)} )
     .attr('y2', (d) => yScale(d.final_televote_points))
-    .attr('transform', 'translate(55,60)');
 
 
   SVG.select('.xlabel').transition().text('Total Points');
   SVG.select('.ylabel').transition().text('Points per mode');
 }
 function plotDifference () {
-  SVG.selectAll('.xaxis').remove();
-        SVG.append('g').attr("class","xaxis")
-            .attr('transform', 'translate(55,'+ xAxisTranslate + ')')
-            .call(x_axisS);
-    
-        SVG.selectAll('#yaxis').remove();
-        SVG.append('g').attr('id', 'yaxis')
-            .attr('transform', 'translate(55,60)').call(y_axisS);
-        SVG.selectAll('.connect').transition().attr('visibility', 'visible');
-        SVG.selectAll('.xaxis .tick text').attr('visibility', 'hidden');
-        SVG.selectAll('.connect').transition().attr('visibility', 'visible');
-        SVG.select('.xlabel').text('Controversy');
-        SVG.select('.ylabel').text('Difference');
-        
-        SVG.selectAll('.televote')
-            .attr('cy', yScaleS('0'))
-            .attr('cx', function(d) {return xScaleS(d.rank)})
-            .attr('transform', 'translate(55,60)');
-        
+  clearAxis()
+  SVG.append('g').attr("id","xaxis").attr('transform', 'translate(55,'+ xAxisTranslate +')').call(x_axisS); // TODO Fix me?
+  SVG.append('g').attr('id', 'yaxis').attr('transform', 'translate(55,60)').call(y_axisS);
 
-        SVG.selectAll('.jury').transition()
-            .attr('cy', function (d) { return yScaleS( Math.abs(d.final_televote_points-d.final_jury_points))}) 
-            .attr('cx', function(d) {return xScaleS ( d.rank)})
-            .attr('transform', 'translate(55,60)');
-        SVG.selectAll('.connect').transition()
-        .attr('opacity', '1')
-        .attr('x1', function (d) { return xScaleS(d.rank);} ) // TODO Rang Problem
-        .attr('y1', yScale('0'))
-        .attr('x2', function (d) {return xScaleS( d.rank);} )
-        .attr('y2', function(d) {return yScaleS( d.controversy)})
-        .attr('transform', 'translate(55,60)');
+  SVG.selectAll('.televote')
+    .transition().duration(800).ease(d3.easeBack)
+    .attr('cy', yScaleS('0'))
+    .attr('cx', function(d) {return xScaleS(d.rank)})
+
+  SVG.selectAll('.jury')
+    .transition().duration(800).ease(d3.easeBack)
+    .attr('cy', function (d) { return yScaleS( Math.abs(d.final_televote_points-d.final_jury_points))}) 
+    .attr('cx', function(d) {return xScaleS ( d.rank)})
+
+  SVG.selectAll('.connect').transition().duration(800).ease(d3.easeBack)
+    .attr('visibility', 'visible')
+    .attr('opacity', '1')
+      .attr('x1', function (d) { return xScaleS(d.rank);} )
+      .attr('y1', yScale('0'))
+      .attr('x2', function (d) {return xScaleS( d.rank);} )
+      .attr('y2', function(d) {return yScaleS( d.controversy)})
+
+  SVG.selectAll('.xaxis .tick text').attr('visibility', 'hidden');
+  SVG.select('.xlabel').text('Controversy');
+  SVG.select('.ylabel').text('Difference');
+
 }
 function plotCountry (){
-  SVG.selectAll('.xaxis').remove();
-        SVG.append('g').attr("class","xaxis")
-            .attr('transform', 'translate(55,'+ xAxisTranslateO + ')')
-            .call(x_axisO);
-        SVG.selectAll('.xaxis .tick text').attr("transform", 'translate(0,25)rotate(-45)');
+  clearAxis()
+  SVG.append('g').attr("id","xaxis").call(x_axisO);
+  SVG.selectAll('#xaxis .tick text').attr("transform", 'translate(0,25)rotate(-45)');
+  SVG.append('g').attr('id', 'yaxis').call(y_axisO);
+            
+  SVG.selectAll('.connect').transition()
+    .duration(800).ease(d3.easeBack)
+    .attr('opacity', '0').attr('visibility', 'hidden');
 
-        SVG.selectAll('#yaxis').remove();
-        SVG.append('g').attr('id', 'yaxis')
-            .attr('transform', 'translate(55,29)')
-            .call(y_axisO);
+  SVG.selectAll('.jury')
+    .transition().duration(800).ease(d3.easeBack)
+    .attr('cx', function(d){return xScaleO (d.country)+ xScaleO.bandwidth()/2 - Math.random()*jitterWidth})
+    .attr('cy', function(d){return yScale (d.final_jury_points)})
 
-        
-        SVG.selectAll('.connect').transition().attr('visibility', 'hidden');
+  SVG.selectAll('.televote').transition().duration(800).ease(d3.easeBack)
+    .attr('cx', function(d){return xScaleO (d.country)+ xScaleO.bandwidth()/2 - Math.random()*jitterWidth2})
+    .attr('cy', function(d){return yScale (d.final_televote_points)})
 
-        SVG.selectAll('.jury').transition()
-            .attr('cx', function(d){return xScaleO (d.country)+ xScaleO.bandwidth()/2 - Math.random()*jitterWidth})
-            .attr('cy', function(d){return yScale (d.final_jury_points)})
-            .attr('transform', 'translate(55,29)');
-        SVG.selectAll('.televote').transition()
-            .attr('cx', function(d){return xScaleO (d.country)+ xScaleO.bandwidth()/2 - Math.random()*jitterWidth2})
-            .attr('cy', function(d){return yScale (d.final_televote_points)})
-            .attr('transform', 'translate(55,29)');
-        
-
-            SVG.select('.xlabel').transition().text('Country');
-            SVG.select('.ylabel').transition().text('Points per mode');
+  SVG.select('.xlabel').transition().text('Country');
+  SVG.select('.ylabel').transition().text('Points per mode');
 }
 
-
-plotTotalPoints()
 
 // Buttons + Functions
 function changePlot (id){
@@ -268,7 +258,7 @@ let showYear = function(name){
 
 
 function toggleCheckbox (name, id) {
-    console.log(id)
+  console.log(id)
   let checkBox = document.getElementById(id);
   if (checkBox.checked === true){
     showYear(name);

@@ -148,18 +148,27 @@ input[type="checkbox"]:checked + label {
 
 
 circle {
-  r: 3px;
-  fill: var(--vis_dark)
+  r: 4px;
+  stroke-width: var(--stroke-width);
 }
 
 .jury {
   fill: var(--vis_dark);
   stroke: var(--vis_dark);
 }
+.televote {
+  fill: var(--vis_light);
+  stroke: var(--vis_dark);
+  
+}
+.connect, #xaxis, #yaxis {
+  stroke: var(--darkBlue);
+  stroke-opacity: 1;
+  stroke-dasharray: 0;
+}
+.tick>line{
+    opacity: .25;
+    stroke-dasharray: 2;
+    color:var(--vis_dark)
+}
 
-line {
-  stroke: var(--darkBlue);
-}
-.connect {
-  stroke: var(--darkBlue);
-}
