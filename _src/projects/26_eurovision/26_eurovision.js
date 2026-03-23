@@ -5,12 +5,12 @@ import {op} from 'arquero'
 // Good variables
 const FILE = "./song_data.csv"
 let REM = window.getComputedStyle(document.querySelector('body')).fontSize.slice(0,2)
-const MARGIN = 2* REM
-const HEIGTH = window.innerHeight - document.querySelector('#head').clientHeight - MARGIN
-const WIDTH = window.innerWidth - 2*MARGIN
-const SVG = d3.select('#datavis').attr('height', HEIGTH).attr('width', WIDTH)
-const VISWIDTH = [0, WIDTH - 4*MARGIN]
-const VISHEIGHT = [0, HEIGTH - 2.5*MARGIN ]
+let MARGIN = 2* REM
+let HEIGTH = window.innerHeight - document.querySelector('#head').clientHeight - MARGIN
+let WIDTH = window.innerWidth - 2*MARGIN
+let SVG = d3.select('#datavis').attr('height', HEIGTH).attr('width', WIDTH)
+let VISWIDTH = [0, WIDTH - 4*MARGIN]
+let VISHEIGHT = [0, HEIGTH - 2.5*MARGIN ]
 
 
 // magic numbers TODO fix!
@@ -27,6 +27,7 @@ let NumTeilnehmer = 179+2;
 const NumTeilnehmerArray = [];
 const jitterWidth = 3;
 const jitterWidth2 = -3;
+let MedianIsVisible = true
 
 //load data as table and get relevant participants since 2016
 let data = await aq.loadCSV(FILE)
@@ -39,8 +40,10 @@ data = data
 data = data.groupby('country')
   .derive({median_country: d => `${op.median(d.final_jury_points)}` })
 data = data.ungroup()
+data = data
+  .derive({topten: d => d.final_place <= 10? 'topten': ''})
 
-data.print({columns: ["country", "median_country"]})
+
 // getting an array of numbers for the scale Point Scale
 for (let i = 0; i<=NumTeilnehmer; i++){
     NumTeilnehmerArray.push(`${i}`);
@@ -157,6 +160,7 @@ function resetModus(){
     .attr('opacity', 1)
     .attr('visibility', 'visible')
 
+  document.getElementById('toggleMedian').classList.remove('active')
   exitMedian()
 }
 function drawInitialPlot(){
@@ -168,7 +172,7 @@ function drawInitialPlot(){
   .data(data)
   .enter()
   .append('line')
-    .attr('class', (d) => {return 'y'+d.year + ' connect' })
+    .attr('class', (d) => {return 'y'+d.year + ' connect ' + d.topten })
     .attr('x1', function (d){return xScale(d.final_total_points);})
     .attr ('y1', function (d){return yScale(d.final_jury_points);})
     .attr('x2', function (d){return xScale(d.final_total_points);})
@@ -180,7 +184,7 @@ d3.select('#marks')
   .data(data)
   .enter()
   .append('circle')
-    .attr('class', (d) => {return 'y'+d.year + ' televote' })
+    .attr('class', (d) => {return 'y'+d.year + ' televote '+ d.topten})
     .attr("cx", function (d) { return xScale(d.final_total_points); } )
     .attr("cy", function (d) { return yScale(d.final_televote_points); } )
     .on('mouseover', (event, d) => startToolTip(d.year,d.country,d.artist_name, d.song_name))
@@ -191,7 +195,7 @@ d3.select('#marks')
   .data(data)
   .enter()
   .append('circle')
-    .attr('class', (d) => {return 'y'+d.year + ' jury' })
+    .attr('class', (d) => {return 'y'+d.year + ' jury ' + d.topten })
     .attr("cx", function (d) { return xScale(d.final_total_points); } )
     .attr("cy", function (d) { return yScale(d.final_jury_points); } )
     .on('mouseover', (event, d) => startToolTip(d.year,d.country,d.artist_name, d.song_name))
@@ -266,7 +270,9 @@ function plotDifference () {
 
 }
 function plotCountry (){
+  
   resetModus()
+  document.getElementById('toggleMedian').classList.add('active')
   drawCountryAxis()
   showMedianPoints()
             
@@ -288,17 +294,28 @@ function plotCountry (){
   SVG.select('.xlabel').transition().text('Country');
   SVG.select('.ylabel').transition().text('Points per mode');
 }
+document.getElementById('toggleMedian').addEventListener('click', () => {
+  if (document.querySelector('#rplotcountry:checked')){
+    
+    MedianIsVisible = !MedianIsVisible
+    MedianIsVisible? showMedianPoints(): exitMedian()
+  }
+  
+})
 function showMedianPoints (){
-  d3.select('#marks')
-  .selectAll()
-  .data(data)
-  .enter()
-  .append('rect')
-    .attr('class', 'median')
-    .attr("x", function (d) { return (xScaleO(d.country) - REM*1.5/2); } )
-    .attr("y", function (d) { return yScale(d.median_country); } )
-    .attr('opacity', '1')
-    .lower()
+  if (MedianIsVisible) {
+    d3.select('#marks')
+    .selectAll()
+    .data(data)
+    .enter()
+    .append('rect')
+      .attr('class', 'median')
+      .attr("x", function (d) { return (xScaleO(d.country) - REM*1.5/2); } )
+      .attr("y", function (d) { return yScale(d.median_country); } )
+      .attr('opacity', '1')
+      .lower()
+  }
+  
 }
 function exitMedian(){
   d3.selectAll('.median')
@@ -306,6 +323,7 @@ function exitMedian(){
     .duration(200)
     .ease(d3.easeBack)
     .attr('opacity', '0')
+    .attr('display', 'none')
 }
 
 // Buttons + Functions
@@ -320,6 +338,24 @@ function changePlot (id){
   }
   
 }
+// change on window resize
+// function reloadVis(){
+//   // reload variables
+
+//   REM = window.getComputedStyle(document.querySelector('body')).fontSize.slice(0,2)
+//   MARGIN = 2* REM
+//   HEIGTH = window.innerHeight - document.querySelector('#head').clientHeight - MARGIN
+//   WIDTH = window.innerWidth - 2*MARGIN
+//   SVG = d3.select('#datavis').attr('height', HEIGTH).attr('width', WIDTH)
+//   VISWIDTH = [0, WIDTH - 4*MARGIN]
+//   VISHEIGHT = [0, HEIGTH - 2.5*MARGIN ]
+
+//   const activeID = document.querySelectorAll("input[type=radio]:checked")
+//   changePlot(activeID)
+//   console.log('test')
+// }
+
+// window.onresize = reloadVis
 
 let hideYear = function(name){
   d3.selectAll('.y'+name)
@@ -333,7 +369,6 @@ let showYear = function(name){
 
 
 function toggleCheckbox (name, id) {
-  console.log(id)
   let checkBox = document.getElementById(id);
   if (checkBox.checked === true){
     showYear(name);
@@ -351,23 +386,24 @@ for (let checkbox of document.querySelectorAll("input[type=checkbox]")) {
 }
 
 function startToolTip(year, country, artist_name, song_name){
-     d3.select("#tooltip").style('display', 'block');
-     d3.select("#country").html(country + ' ' + year );
-     d3.select('#artist').html(artist_name);
-     d3.select('#song').html(song_name); 
-     d3.selectAll('circle').transition().attr('r', '3').style('opacity', '.1');
-     d3.selectAll('.connect').transition().style('opacity', '.05');
-     d3.selectAll('.y'+ year).transition().attr('r', '6').style('opacity', '1');
+  d3.select("#tooltip").style('display', 'block');
+  d3.select("#country").html(country + ' ' + year );
+  d3.select('#artist').html(artist_name);
+  d3.select('#song').html(song_name); 
+  d3.selectAll('circle').transition().attr('r', '3').style('opacity', '.1');
+  d3.selectAll('.connect').transition().style('opacity', '.05');
+  d3.selectAll('.median').transition().style('opacity', '.05');
+  d3.selectAll('.y'+ year).transition().attr('r', '6').style('opacity', '1');
     //  d3.select('#EV-flag-spez').attr('src', 'flags/1x1/' + country + '.SVG')
     
 }  
 function stopToolTip (year){
-    d3.select("#tooltip").style('display', 'none');
-    d3.selectAll('circle').transition().attr('r', '4').style('opacity','1');
-    d3.selectAll('.connect').transition().attr('r', '4').style('opacity','1');
-        
- 
-     } 
+  d3.select("#tooltip").style('display', 'none');
+  d3.selectAll('circle').transition().attr('r', '4').style('opacity','1');
+  d3.selectAll('.connect').transition().attr('r', '4').style('opacity','1');
+  d3.selectAll('.median').transition().style('opacity', '1');   
+} 
+
 stopToolTip(); 
 let tooltip = d3.select('#datavis')
     .on('mousemove', function(event){

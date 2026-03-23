@@ -314,6 +314,7 @@ figure>picture>img{
 figcaption{
   color: var(--text_alt);
   text-align: center;
+  line-height: 150%;
 }
 
 @media screen and (orientation: portrait)  { 

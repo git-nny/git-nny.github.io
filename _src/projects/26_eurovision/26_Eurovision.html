@@ -12,7 +12,7 @@
     <h1> Jury vs Televote in the Eurovision Song Contest</h1>
     <p> Design a cool cover</p>
   </section> -->
-  <section> 
+  <section class="fill_height"> 
     <div id="head" class="flex_row">
 
     
@@ -59,8 +59,6 @@
           <label for="cb2018" class="cblab">2018</label>
           <input type="checkbox" name="2019" id ='cb2019' checked>
           <label for="cb2019" class="cblab">2019</label>
-          <input type="checkbox" name="2020" id ='cb2020' checked>
-          <label for="cb2020" class="cblab">2020</label>
           <input type="checkbox" name="2021" id ='cb2021' checked>
           <label for="cb2021" class="cblab">2021</label>
           <input type="checkbox" name="2022" id ='cb2022' checked>
@@ -71,22 +69,39 @@
       </div>
 
     </div>
-      
-    
-    
-    
-
-    
 
     <div id="vis">
       <svg id="datavis"></svg>
     </div>
   </section>
   
-
-
-
-  
+  <section id="about" class="flex_column big_gap">
+    <h1> About the Project</h1>
+    <div class="flex_row" id="add_info">
+      <div class="flex_column">
+      <h2> Why? </h2>
+      <p> I was really wondering if controversy is the name of the game when it comes to the Eurovision Song Contest, so I build a tool for mapping controversy in my visual analytics seminar back in 2023. Small rework in 2026 focused mostly on making it easier to maintain.
+        <hr>
+    </div>
+    
+    <div class="flex_column">
+      <h2> Credits </h2>
+      <ul>
+        <li> Arquero for Data Preprocessing </li>
+        <li> D3.js for Data Visualisation </li>
+        <li> Original Dataset by ODI6S via Kaggle </li>
+        <li> <s>Flag Icons by Panayiotis Lipiridis</s> </li>
+      </ul>
+      <hr>
+    </div>
+    <div class="flex_column">
+      <h2> More Options</h2>
+      <input type="checkbox" checked name="toggleMedian"> 
+      <label for="toggleMedian" id="toggleMedian"> Show Median (country only)</label>
+      <hr>
+    </div>
+    </div>
+  </section> 
 
   <div id="tooltip">
     <div class="flex_column xs_gap">
@@ -97,30 +112,12 @@
 <!-- <img id=EV-flag-spez src="flags\1x1\Monaco.svg" height='60' width="60"  clip-path="url(#maske)">  -->
 <!-- <svg id="Rahmen" height="60" width="60"> 
 <rect height="54" width="54" rx='100'  x="4" y="4"></rect></svg> -->
-</div>
 
 
 
-
-
-<!-- TODO: Revisit -->
-<!-- <div>
-  <div class="containerfoot" >
-                <h3 id="televotetext"> Juryvote</h3>
-                <svg id='telec' height="20" width="20"  >
-<rect id='rectl' width="15" height ='15' x="2.5" y='2.5' rx="100" >
-</rect>
-                </svg>
-                <h3 id="juryvotetext"> Televote</h3>
-                <svg id="juryc" height="20" width="20" >
-                <rect id='rect2' width="15" height ='15' x="2.5" y='2.5' rx="100"></rect>
-            </svg>
-
-            <h3 for="Infob" class="Info h3 label">Source</h3>
-            <h3 id="InfoToggle"> The flags Icons were made by <a href="https://github.com/lipis">Panayiotis Lipiridis</a> and published under the <a href="license.txt">MIT Licence</a>. <br>
-                Data Source: <a href="https://eurovision.tv/history">eurovision.tv/history</a> - No Data available for 2020 </h3>
+           
     
-</div> -->
+
 
 
 

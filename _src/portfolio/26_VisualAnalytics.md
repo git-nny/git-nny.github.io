@@ -31,9 +31,9 @@ The design is purposefully kept simple and minimal, staying close to the colours
 Both votes for each act are represented by a filled or unfilled circle, while the line encodes the difference between both values. Later, I would learn that this visualisation is called a Cleveland Chart, a subtype of the lollipop plot with two groups.
 When hovered over, all acts of the active year are highlighted to make comparison easier.
 
-{% image "../_assets/img/26_ESC_Total.png", "Cleveland Plot Chart of the Results of the ESC 2016-2023"  %}
-{% image "../_assets/img/26_ESC_Controversy.png", "Cleveland Plot Chart, rating the Results of the ESC 2016-2023 by controversy from left to right"  %}
-{% image "../_assets/img/26_ESC_Country.png", "Results of the ESC plotted by country"  %}
+{% image "../_assets/img/26_ESC_Total.png", "Cleveland Plot Chart of the Results of the ESC 2016-2023", "Cleveland Plot of the 2026 Version"  %}
+{% image "../_assets/img/26_ESC_Controversy.png", "Bar Chart Ranking Controversy from left to right", "Difference between points - Green bars represent entries that made the Top Ten in their year."  %}
+{% image "../_assets/img/26_ESC_Country.png", "Results of the ESC plotted by country", "Nul Points for Germany even in the median, what can I say"  %}
 
 ## Development Delights
 It needs to be said that I had no real coding experience prior to this project, and teaching us how to code was not a key objective of the course. I was operating from the general understanding that this is not a thing that I could be any good at, but learning about data visualisation and perception was just interesting enough for me to give it a chance. Within a few weeks, I taught myself the foundations of HTML, CSS and enough JavaScript to build a project that not only works, but builds on the prrof of concept sketch. The visualisation part is carried by D3.js, a library that offers full freedom to create dynamic, interactive SVGs. Additionally, Beautiful Soup was used to add the missing 2023 data that was considered essential to the success of the project.  
