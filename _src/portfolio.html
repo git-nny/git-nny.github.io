@@ -30,7 +30,7 @@
   {%- for post in collections.casestudy -%}
       {%- if post.data.status !== "Coming Soon" -%}
   
-      <a href="{{ post.data.title | slugify }}" class="card">
+      <a href="/casestudy/{{ post.data.title | slugify }}/" class="card">
         <p class="alt_text upper"> <em> {{ post.data.status }} </em> </p>
         <h2> {{ post.data.title }} </h2>
         <p> {{ post.data.TLDR }}  </p>
