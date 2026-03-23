@@ -38,14 +38,14 @@
 
   /*MISC*/
   --col_w_1: 15vw; /*TODO! set correctly*/
-
+  --button_padding: 1rem 1.5rem ;
   --border_radius_img: 30px;
 }
 
 html{
   background-color: var(--bg);
   color: var(--text);
-  font-family: "archivo", Arial, Helvetica, sans-serif;
+  font-family: "archivo",  Helvetica, Arial, sans-serif;
   margin: 0px;
   font-weight: 600;
   font-size: 16px;
@@ -78,7 +78,7 @@ h4 {
 }
 p, a {
   font-size: var(--p_size);
-  line-height: 160%;
+  line-height: 175%;
   vertical-align: top;
   color: var(--text);
 }
@@ -169,13 +169,11 @@ section {
   margin-right: auto;
   padding-bottom: var(--gap_very_big);
 }
-/* ul {
-  list-style-image: url("../_assets/img/asterisk.svg") 
-} */
+
 li{
   padding-top: calc(var(--gap_small) / 2);
   list-style-image: url("../_assets/img/asterisk.svg");
-  line-height: 140%;
+  line-height: 150%;
 
 }
 
@@ -280,6 +278,16 @@ aside>a::after{
   background-color: var(--text_alt);
 }
 
+.button {
+  color: var(--bg);
+  border-radius: var(--border_radius_img);
+  padding: var(--button_padding);
+  background-color: var(--detail_3);
+  transition: background-color 400ms;
+}
+.button:hover {
+  background-color: var(--detail_1);
+}
 /* Wrestling with pictures to be displayed properly */
 .default-img>picture>img{
   display: block;
@@ -306,6 +314,7 @@ figure>picture>img{
 figcaption{
   color: var(--text_alt);
   text-align: center;
+  line-height: 150%;
 }
 
 @media screen and (orientation: portrait)  { 
@@ -353,6 +362,11 @@ figcaption{
   }
   .h2 {
     font-size: var(--h2_size);
+  }
+
+  /*TODO: this button leads to the visual analytics project and I cannot be motivated to make that fit smartphone screens. Too bad.*/
+  .button{
+    display: none;
   }
 
 }
