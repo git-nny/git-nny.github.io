@@ -12,7 +12,7 @@ export default defineConfig({
     emptyOutDir: false, 
     rollupOptions: {
       // 4. Ensures Vite can find your JS/CSS even if 11ty nested them
-      input: './_site/index.html', 
+      //input: './_site/index.html', 
     },
   },
   
