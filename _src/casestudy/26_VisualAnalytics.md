@@ -17,7 +17,7 @@ layout: case_study.njk
 - The project is currently being reworked to be a) more responsive and b) written in a more maintainable way.
 
 
-<a href="../projects/26_eurovision/26_Eurovision.html" class="button"> View Project here</a>
+<a href="/projects/26_eurovision/" class="button"> View Project here</a>
 ## Concept
 The Eurovision Song Contest has a long history of bringing people together, both in the arena and at home in front of the TV screen. Just as long is the history of its controversies - and it regularly includes the voting system. Since the last rule change in 2016, the winner is decided by two sets between _null_ and _douze_ points by a jury of industry professionals and a televote by regular people at home. In 2023, the discussion de jour centred on this separation, as both votes diverged between front runners Loreen and Käärijä. I had not been personally involved before, so I wondered how regularly that happens and centred my visualisation on it.
 

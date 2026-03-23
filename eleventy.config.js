@@ -18,7 +18,11 @@ export default async function(eleventyConfig) {
         }
   });
 
-  eleventyConfig.addPlugin(EleventyVitePlugin);
+  eleventyConfig.addPlugin(EleventyVitePlugin, {
+    tempFolderName: ".11ty-vite",
+    viteOptions: {
+    }
+  });
 
   // for md it attr - geminied!
   const mdOptions = {
