@@ -7,10 +7,9 @@ export default async function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("_src/_style")
   eleventyConfig.addPassthroughCopy("_src/_scripts")
   eleventyConfig.addPassthroughCopy("_src/_assets/")
-  eleventyConfig.addPassthroughCopy("_src/projects")
+  eleventyConfig.addPassthroughCopy("_src/projects/*")
   eleventyConfig.addPassthroughCopy("CNAME")
-  eleventyConfig.addPassthroughCopy("**/*.js");
-  eleventyConfig.addPassthroughCopy("**/*.css");
+
 
   // For image plugin
   eleventyConfig.addPlugin(eleventyImageTransformPlugin, {
