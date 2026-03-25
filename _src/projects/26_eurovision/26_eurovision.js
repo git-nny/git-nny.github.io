@@ -3,7 +3,7 @@ import { select, selectAll, scaleLinear, scalePoint, axisBottom, axisLeft, easeB
 import {op, loadCSV} from 'arquero'
 
 // Good variables
-const FILE = "./song_data.csv"
+const FILE = "/_data/song_data.csv"
 let REM = window.getComputedStyle(document.querySelector('body')).fontSize.slice(0,2)
 let MARGIN = 2* REM
 let HEIGTH = window.innerHeight - document.querySelector('#head').clientHeight - MARGIN
